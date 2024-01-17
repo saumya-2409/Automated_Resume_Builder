@@ -214,7 +214,7 @@ function generatePDF(event) {
     };
 
     // Generate the PDF and download it
-    pdfMake.createPdf(docDefinition).open();
+    pdfMake.createPdf(docDefinition).download();
 }
 
 function toTitleCase (str) {
