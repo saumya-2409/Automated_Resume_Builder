@@ -1,18 +1,21 @@
-# Automated Resume Builder
+# Automated Resume Builder Website 🚀
 
-A simple web app that allows users to input their information and generate a downloadable resume.
+Welcome to **Automated Resume Builder Website**, a simple yet elegant site built with HTML, CSS, and JavaScript.
 
-## ✨ Features
-- Input-based resume builder
-- Download resume as PDF
-- Clean UI with responsive design
+## Features
+- Clean and modern design ✨
+- Responsive and user-friendly 📱
+- Smooth interactions with JavaScript 🎯
 
-## 🚀 How to Run
+## How to View
+Check out the live site here:  
+[[https://yourusername.github.io/my-awesome-site/](https://automated-resume-builder.vercel.app/)
 
-### Option 1: Open `index.html` directly
-- Simply open the `index.html` in a browser
+## How to Use This Repo
+- All website files are stored here.
+- Feel free to fork and customize your own version.
+- Contributions and suggestions are welcome!
 
-### Option 2: Run with a local server
-If using Python:
-```bash
-python -m http.server
+---
+
+Made with ❤️ by [Saumya](https://github.com/saumya-2409)
