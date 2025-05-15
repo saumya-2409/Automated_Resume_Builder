@@ -9,7 +9,7 @@ Welcome to **Automated Resume Builder Website**, a simple yet elegant site built
 
 ## How to View
 Check out the live site here:  
-[[https://yourusername.github.io/my-awesome-site/](https://automated-resume-builder.vercel.app/)
+[https://automated-resume-builder/](https://automated-resume-builder.vercel.app/)
 
 ## How to Use This Repo
 - All website files are stored here.
