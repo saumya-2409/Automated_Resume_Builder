@@ -1,11 +1,10 @@
-// Define the generatePDF function
 function generatePDF(event) {
-    if(event){
-        event.preventDefault(); // Prevent the form from submitting and refreshing the page
+    if (event) {
+        event.preventDefault();
     }
 
-    // Get the values from the form
-    const fname =document.getElementById("fname").value;
+    // Get form values
+    const fname = document.getElementById("fname").value;
     const lname = document.getElementById("lname").value;
     const mail = document.getElementById("mail").value;
     const phno = document.getElementById("phno").value;
@@ -14,18 +13,14 @@ function generatePDF(event) {
 
     const sname1 = document.getElementById("sname1").value;
     const slocate1 = document.getElementById("slocate1").value;
-    const sdate1 = document.getElementById("sdate1").value;
     const edate1 = document.getElementById("edate1").value;
     const percent1 = document.getElementById("percent1").value;
-    const acheive1 = document.getElementById("acheive1").value;
 
     const sname2 = document.getElementById("sname2").value;
     const slocate2 = document.getElementById("slocate2").value;
-    const sdate2 = document.getElementById("sdate2").value;
     const edate2 = document.getElementById("edate2").value;
     const stream2 = document.getElementById("stream2").value;
     const percent2 = document.getElementById("percent2").value;
-    const acheive2 = document.getElementById("acheive2").value;
 
     const uniname3 = document.getElementById("uniname3").value;
     const unilocate3 = document.getElementById("unilocate3").value;
@@ -56,190 +51,229 @@ function generatePDF(event) {
     // Define the document definition object
     const docDefinition = {
         content: [
-            ...(fname || lname ? [
+            // Header Section
             {
-                alignment: 'center',
-                fontSize:'20',
-                text:`${fname.toUpperCase()} ${lname.toUpperCase()}`,
-                style:"header"
-            }
-            ] : []),
-
-            ...(mail||phno ? [
+                text: `${fname.toUpperCase()} ${lname.toUpperCase()}`,
+                style: "header",
+                alignment: "center",
+                margin: [0, 0, 0, 10],
+            },
             {
-                alignment: 'center',
-                text:`${mail} | (+91) ${phno}`,
-                style:"subheader",
-                color: 'grey'
-            }
-            ] : []),
-
-            ...( ghacc || lacc? [
-            {
-                style:'texthead',
-                color:'blue',
-                text:   `${ghacc}
-                        ${lacc}`
-            }
-            ] : []),
-
-            ...(skill1 || skill2 || skill3 ? [
-                {
-                    text: "SKILLS",
-                    style: "header"
+                table : {
+                    widths : ["*","*","*","*"],
+                    body : [
+                        [
+                            { text: `+91 ${phno}`, style: "text"},
+                            { text: `${mail}`, style: "link",},
+                            { text: `${lacc}`, style: "link",},
+                            { text: `${ghacc}`, style: "link",},                            
+                        ],
+                    ],
                 },
-                {
-                    type: 'square',
-                    style: "texthead",
-                    ul: [
-                        toSentenceCase(skill1),
-                        toSentenceCase(skill2),
-                        toSentenceCase(skill3)
-                    ]
-                }
-                ] : []),
-
-            {
-                text:"EDUCATION",
-                style: "header"
+                layout: "noBorders", // Remove table borders
+                margin: [0, 0, 0, 20], // Add margin below the table
             },
-            
+
+            // Education Section
             {
-                ul:[
-                    // Check and include Master's details only if not all values are blank
-                    ...(uniname4 || unilocate4 || sdate4 || edate4 || degree4 || fostudy4 || descp4 ? [
-                        {
-                            style:"subheader",
-                            text: `${degree4.toUpperCase()} ${toSentenceCase(fostudy4)} | ${toTitleCase(uniname4)} ${toTitleCase(unilocate4)}
-                                    ${sdate4}  -  ${edate4}`
-                        },
-                        {
-                            style: "texthead",
-                            ul: [
-                                toSentenceCase(descp4)
-                            ]
-                        }
-                    ] : []),
-
-                    // Check and include Bachelor's details only if not all values are blank
-                    ...(uniname3 || unilocate3 || sdate3 || edate3 || degree3 || fostudy3 || descp3 ? [
-                        {
-                            style:"subheader",
-                            text: `${degree3.toUpperCase()} ${toSentenceCase(fostudy3)} | ${toTitleCase(uniname3)} ${toTitleCase(unilocate3)}
-                                    ${sdate3}  -  ${edate3}`
-                        },
-                        {
-                            style: "texthead",
-                            ul: [
-                                toSentenceCase(descp3)
-                        ]
-                        }
-                    ] : []),
-
-                    // Check and include 12th details only if not all values are blank
-                    ...(sname2 || slocate2 || sdate2 || edate2 || stream2 || percent2 || acheive2 ? [
-                        {
-                            style:"subheader",
-                            text: `XII | ${toTitleCase(sname2)} ${toTitleCase(slocate2)}
-                                    ${sdate2}  -  ${edate2}
-                                    ${stream2.toUpperCase()}
-                                    Grade: ${percent2}%`,
-                        },
-                        {
-                            style: "texthead",
-                            ul: [
-                                toSentenceCase(acheive2)
-                            ]
-                        }
-                    ] : []),
-
-                    // Check and include 10th details only if not all values are blank
-                    ...(sname1 || slocate1 || sdate1 || edate1 || percent1 || acheive1 ? [
-                        {
-                            style:"subheader",
-                            text: `X | ${toTitleCase(sname1)} ${toTitleCase(slocate1)}
-                                    ${sdate1}  -  ${edate1}
-                                    Grade: ${percent1}%`,
-                        },
-                        {
-                            style: "texthead",
-                            ul: [
-                                toSentenceCase(acheive1)
-                            ]
-                        }
-                        ] : []),
-                ]
+                text: "Education",
+                style: "sectionHeader",
+                margin: [0, 10, 0, 10],
             },
-            
-            ...(cname|| ptitle || sdate || edate ? [
-            {
-                text: "EXPERIENCE",
-                style: "header"
-            },
-            {
-                text: `${toTitleCase(ptitle)} | ${toTitleCase(cname)}
-                        ${sdate}  -  ${edate}`,
-                style: "subheader"
-            },
-            {
-                style: "texthead",
-                ul: [
-                    toSentenceCase(wsum)
-                ]
-            }
-            ] : []),
+            ...(uniname4 || unilocate4 || sdate4 || edate4 || degree4 || fostudy4 || descp4
+                ? [
+                      {
+                        text: `${toTitleCase(uniname4)}`, // University Name
+                        style: "boldText",
+                      },
+                      {
+                        text: `${degree4} in ${toTitleCase(fostudy4)}`, // Degree
+                        style: "italicText",
+                    },
+                    {
+                        text: `${sdate4} - ${edate4}`, // Dates
+                        style: "smallItalicText",
+                    },
+                    {
+                        text: `CGPA: ${descp4}`, // CGPA
+                        style: "smallItalicText",
+                        margin: [0, 0, 0, 10], // Add margin below the CGPA
+                    },
+                  ]
+                : []),
+            ...(uniname3 || unilocate3 || sdate3 || edate3 || degree3 || fostudy3 || descp3
+                ? [
+                      {
+                          text: `${degree3.toUpperCase()} in ${toTitleCase(fostudy3)}`,
+                          style: "subheader",
+                      },
+                      {
+                          text: `${toTitleCase(uniname3)}, ${toTitleCase(unilocate3)}`,
+                          style: "text",
+                      },
+                      {
+                          text: `${sdate3} - ${edate3}`,
+                          style: "text",
+                      },
+                      {
+                          text: `${descp3}`,
+                          style: "text",
+                          margin: [0, 0, 0, 10],
+                      },
+                  ]
+                : []),
+            ...(sname2 || slocate2 || edate2 || stream2 || percent2
+                ? [
+                      {
+                          text: `Class XII (${stream2.toUpperCase()})`,
+                          style: "subheader",
+                      },
+                      {
+                          text: `${toTitleCase(sname2)}, ${toTitleCase(slocate2)}`,
+                          style: "text",
+                      },
+                      {
+                          text: `${edate2}`,
+                          style: "text",
+                      },
+                      {
+                          text: `Percentage: ${percent2}%`,
+                          style: "text",
+                      },
+                  ]
+                : []),
+            ...(sname1 || slocate1 || edate1 || percent1
+                ? [
+                      {
+                          text: `Class X`,
+                          style: "subheader",
+                      },
+                      {
+                          text: `${toTitleCase(sname1)}, ${toTitleCase(slocate1)}`,
+                          style: "text",
+                      },
+                      {
+                          text: `${edate1}`,
+                          style: "text",
+                      },
+                      {
+                          text: `Percentage: ${percent1}%`,
+                          style: "text",
+                      },
+                  ]
+                : []),
 
+            // Work Experience Section
+            ...(ptitle || cname || sdate || edate || wsum
+                ? [
+                      {
+                          text: "WORK EXPERIENCE",
+                          style: "sectionHeader",
+                          margin: [0, 10, 0, 10],
+                      },
+                      {
+                          text: `${toTitleCase(ptitle)}`,
+                          style: "subheader",
+                      },
+                      {
+                          text: `${toTitleCase(cname)}`,
+                          style: "text",
+                      },
+                      {
+                          text: `${sdate} - ${edate}`,
+                          style: "text",
+                      },
+                      {
+                          text: `${wsum}`,
+                          style: "text",
+                          margin: [0, 0, 0, 10],
+                      },
+                  ]
+                : []),
 
+            // Skills Section
+            ...(skill1 || skill2 || skill3
+                ? [
+                      {
+                          text: "SKILLS",
+                          style: "sectionHeader",
+                          margin: [0, 10, 0, 10],
+                      },
+                      {
+                          ul: [skill1, skill2, skill3].filter(Boolean).map((skill) => ({
+                              text: skill,
+                              style: "text",
+                          })),
+                      },
+                  ]
+                : []),
         ],
-
         styles: {
             header: {
-                fontSize: 18,
+                fontSize: 24,
                 bold: true,
-                margin: [0, 20, 0, 10],
-                color:'#4A86E8'
+                color: "#2c3e50",
             },
             subheader: {
-                fontSize: 14,
-                bold:true,
-                margin: [0, 10, 0, 5],
-                color:'black'
+                fontSize: 16,
+                bold: true,
+                color: "#34495e",
+                margin: [0, 5, 0, 5],
             },
-            texthead: {
+            sectionHeader: {
+                fontSize: 18,
+                bold: true,
+                color: "#2c3e50",
+                margin: [0, 10, 0, 5],
+            },
+            text: {
                 fontSize: 12,
-                bold: false,
-                margin: [0,5,0,2.5]
-            }
-        }
+                color: "#333",
+                margin: [0, 0, 0, 5],
+            },
+            link: {
+                fontSize: 12,
+                color: "#000000",
+                margin: [0, 0, 0, 5],
+                decoration: "underline",
+            },
+            boldText: {
+                fontSize: 14,
+                bold: true,
+                color: "#2c3e50",
+                margin: [0, 0, 0, 5],
+            },
+            italicText: {
+                fontSize: 12,
+                italics: true,
+                color: "#333",
+                margin: [0, 0, 0, 5],
+            },
+            smallItalicText: {
+                fontSize: 10,
+                italics: true,
+                color: "#666",
+                margin: [0, 0, 0, 5],
+            },
+        },
     };
 
     // Generate the PDF and download it
     pdfMake.createPdf(docDefinition).download();
 }
 
-function toTitleCase (str) {
-    if (!str) {
-      return '';
-    }
-    const strArr = str.split(' ').map((word) => {
-      return word ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
-    });
-    return strArr.join(' ');
+// Helper functions
+function toTitleCase(str) {
+    return str
+        ? str
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+              .join(" ")
+        : "";
 }
 
-function firstLetterUpper(str) {
-    var newstr = str.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g,function(c){return c.toUpperCase()});
-    return newstr;
-}
-
-function toSentenceCase(str) {
-    var newString = firstLetterUpper(str);
-    return newString;
-}
-
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     const resumeForm = document.getElementById("resumeForm");
-    // Check if resumeForm is not null before adding the event listener
     if (resumeForm) {
         resumeForm.addEventListener("submit", generatePDF);
     } else {
