@@ -1,155 +1,194 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+    --primary-accent: #4f46e5;
+    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.02);
+    --input-focus: rgba(99, 102, 241, 0.15);
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: #f7f9fc;
-  padding: 3% 10%;
-  color: #2d2d2d;
-  line-height: 1.6;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    min-height: 100vh;
 }
 
-h1 {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #0d3b66;
-  margin-bottom: 30px;
+/* Header & Nav */
+.main-header {
+    background-color: var(--primary-teal);
+    padding: 2rem;
+    color: white;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-hr {
-  border: 0.5px solid #ccc;
-  margin-bottom: 25px;
+.custom-nav {
+    background-color: var(--dark-teal);
+    display: flex;
+    justify-content: center;
 }
 
-.container {
-  background-color: #ffffff;
-  padding: 40px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  text-align: center;
-  margin-bottom: 40px;
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
+.custom-nav a {
+    color: #feffff;
+    padding: 15px 25px;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
-.bgcol {
-  background-color: #f1f5ff;
-  border-radius: 8px;
-  padding: 10px;
+.custom-nav a:hover {
+    background-color: var(--medium-teal);
 }
 
-label {
-  font-weight: 500;
-  font-size: 0.95rem;
-  display: inline-block;
-  margin-bottom: 8px;
-  color: #374151;
+/* Card Styling */
+.card-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px; /* Rounder corners */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
-input {
-  background: #fefefe;
-  border: 1.5px solid #d1d5db;
-  border-radius: 8px;
-  padding: 10px;
-  width: 30%;
-  min-width: 200px;
-  margin: 0 15px 15px 0;
-  font-size: 0.95rem;
-  transition: border 0.3s ease, background 0.3s ease;
+.section-title {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    border-bottom: none; /* Remove the line */
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-input:focus {
-  background-color: #fffef5;
-  border-color: #3b82f6;
-  outline: none;
+/* Use a small accent bar next to the title instead of the whole left side */
+.section-title::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: var(--primary-accent);
+    border-radius: 4px;
 }
 
-textarea {
-  font-family: 'Inter', sans-serif;
-  background: #fefefe;
-  border: 1.5px solid #d1d5db;
-  border-radius: 8px;
-  padding: 12px;
-  width: 100%;
-  font-size: 1rem;
-  transition: border 0.3s ease;
-  min-height: 120px;
-  resize: vertical;
-}
-
-textarea:focus {
-  background-color: #fffef5;
-  border-color: #3b82f6;
-  outline: none;
-}
-
-a {
-  text-decoration: none;
-  font-size: 0.9rem;
-  color: #3b82f6;
-  padding: 6px 10px;
-  transition: all 0.3s ease;
-}
-
-a:hover {
-  background-color: #e0e7ff;
-  color: #1e3a8a;
-  border-radius: 6px;
-}
-
-.submit {
-  background-color: #2563eb;
-  color: white;
-  padding: 12px 24px;
-  margin-top: 15px;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.submit:hover {
-  background-color: #1e40af;
-}
-
-.form {
-  padding: 20px 0;
+/* Form Controls */
+.form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: var(--medium-teal);
 }
 
 .form-control {
-  margin-bottom: 20px;
-  position: relative;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    padding: 10px;
+    background-color: #f9f9f9;
 }
 
-.form-control label {
-  color: #555;
-  margin-bottom: 5px;
-  display: block;
-  font-weight: 500;
+.form-control:focus {
+    border-color: var(--primary-teal);
+    box-shadow: 0 0 0 0.2rem rgba(17, 124, 143, 0.25);
+    background-color: #fff;
 }
 
-.form-control input {
-  border: 1.5px solid #d1d5db;
-  border-radius: 8px;
-  display: block;
-  width: 100%;
-  padding: 10px;
-  font-size: 0.95rem;
-  background: #fff;
-  transition: border-color 0.3s ease;
+/* Button */
+.btn-generate {
+    background-color: var(--medium-teal);
+    color: white;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    border: none;
+    transition: 0.3s transform;
+    box-shadow: 0 4px 15px rgba(43, 122, 120, 0.3);
 }
 
-.form-control input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  background-color: #fffef5;
+.btn-generate:hover {
+    background-color: var(--dark-teal);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .card-section {
+        margin-bottom: 20px;
+    }
+}
+
+.form-control {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background-color: #fff;
+}
+
+.form-control:focus {
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    outline: none;
+}
+
+.form-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.btn-generate {
+    background: var(--primary-accent);
+    color: white;
+    padding: 1rem 3rem;
+    font-weight: 600;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-generate:hover {
+    background: #4338ca; /* Darker indigo */
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4);
+}
+.card-section {
+    border: none; /* Remove the hard border */
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease;
+}
+
+.card-section:hover {
+    transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.card-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    /* 1. Add a transparent border to prevent the card from 'jumping' on hover */
+    border: 1.5px solid transparent; 
+    /* 2. Transition all properties for a smooth fade-in effect */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--card-shadow);
+    cursor: pointer;
+}
+
+/* 3. The Neon Hover State */
+.card-section:hover {
+    /* Bright indigo border to match your branding */
+    border-color: #6366f1; 
+    
+    /* Layered shadows create the 'Glow' effect */
+    box-shadow: 
+        0 0 10px rgba(99, 102, 241, 0.2), /* Tight inner glow */
+        0 0 20px rgba(99, 102, 241, 0.1), /* Medium aura */
+        0 10px 15px -3px rgba(0, 0, 0, 0.1); /* Keep the ground shadow */
+        
+    /* Optional: Slight lift effect */
+    transform: translateY(-4px); 
+}
+
+/* Optional: Make the section title accent glow as well */
+.card-section:hover .section-title::before {
+    box-shadow: 0 0 8px #6366f1;
+    filter: brightness(1.2);
 }
