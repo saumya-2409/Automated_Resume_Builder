@@ -1,4 +1,4 @@
-# Automated Resume Builder Website 🚀
+# V2 : Automated Resume Builder Website 🚀
 
 Welcome to **Automated Resume Builder Website**, a simple yet elegant site built with HTML, CSS, and JavaScript.
 
