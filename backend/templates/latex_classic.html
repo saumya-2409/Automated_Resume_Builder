@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<!--
+  latex_classic.html — Resumify PDF Template
+  Replicates the charter-font, blue-primary-color LaTeX .tex style.
 
+  Key mappings from .tex → CSS:
+    \usepackage{charter}                     → Libre Baskerville (closest web serif)
+    \definecolor{primaryColor}{RGB}{0,102,204} → rgb(0, 102, 204)
+    \titleformat{\section} + \titlerule      → .section-title + hr.rule
+    \begin{twocolentry}{date}                → .two-col flex row
+    \begin{highlights}  (leftmargin=10pt)    → ul.highlights
+    \raggedright                             → text-align: left
+    margins: top=1cm bottom=1cm left=1.5cm right=1.5cm
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* ── Fonts ────────────────────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+    /* ── Page Setup (mirrors \geometry in .tex) ────────────────── */
+    @page {
+      size: letter;                /* \documentclass[letterpaper] */
+      margin: 1cm 1.5cm 1cm 1.5cm; /* top bottom left right */
+    }
+
+    /* ── Base ──────────────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 10pt;
+      line-height: 1.4;
+      color: #000;
+      text-align: left;            /* \raggedright */
+    }
+
+    a {
+      color: rgb(0, 102, 204);     /* urlcolor=primaryColor */
+      text-decoration: none;
+    }
+
+    /* ── Header (two-minipage layout from .tex) ────────────────── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8pt;
+    }
+
+    .header-left .name {
+      font-size: 16pt;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .header-left .links {
+      font-size: 9pt;
+      margin-top: 2pt;
+      color: #000;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 9pt;
+      line-height: 1.6;
+    }
+
+    /* ── Section Title (\titleformat{\section}) ────────────────── */
+    /* color=primaryColor, \bfseries\large, followed by \titlerule */
+    .section-title {
+      color: rgb(0, 102, 204);     /* primaryColor */
+      font-weight: 700;
+      font-size: 11pt;
+      margin-top: 10pt;
+      margin-bottom: 1pt;
+      page-break-after: avoid;    /* \needspace{4\baselineskip} */
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 0.8pt solid #333;
+      margin-bottom: 4pt;
+    }
+
+    /* ── Two-Column Entry (\begin{twocolentry}{date}) ────────────
+       Left column fills remaining space; right column is ~4.5cm.  */
+    .two-col {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8pt;
+    }
+
+    .two-col .left  { flex: 1; }
+    .two-col .right {
+      font-style: italic;
+      white-space: nowrap;
+      font-size: 9pt;
+    }
+
+    /* ── One-Column Entry (\begin{onecolentry}) ─────────────────── */
+    .one-col { width: 100%; }
+
+    /* ── Highlights / Bullet List (\begin{highlights}) ────────────
+       leftmargin = 0cm + 10pt, bullet = small centered dot         */
+    ul.highlights {
+      margin: 3pt 0 0 10pt;
+      padding-left: 12pt;
+      list-style-type: disc;
+    }
+
+    ul.highlights li {
+      margin-bottom: 2pt;
+      font-size: 9.5pt;
+      line-height: 1.45;
+    }
+
+    /* ── Skills ─────────────────────────────────────────────────── */
+    .skill-row {
+      margin-bottom: 3pt;
+      font-size: 9.5pt;
+    }
+
+    .skill-category { font-weight: 700; }
+    .skill-items    { font-style: italic; }
+
+    /* ── Experience / Project entry spacing ──────────────────────── */
+    .entry        { margin-bottom: 8pt; }
+    .entry-name   { font-weight: 700; }
+    .entry-sub    { font-style: italic; }
+
+    /* ── Education ───────────────────────────────────────────────── */
+    .edu-degree   { font-size: 9.5pt; margin-top: 2pt; }
+    .edu-cgpa     { font-weight: 700; }
+
+    /* ── Certifications ──────────────────────────────────────────── */
+    .cert-row     { font-size: 9.5pt; margin-bottom: 2pt; }
+    .cert-provider { font-weight: 700; }
+
+    /* ── Achievements ────────────────────────────────────────────── */
+    .achievement  { font-size: 9.5pt; margin-bottom: 4pt; }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ───────────────────────────────────────────────── -->
+  <div class="header">
+    <div class="header-left">
+      <div class="name">{{ name }}</div>
+      <div class="links">
+        {% if github %}<a href="{{ github }}">Github</a>{% endif %}
+        {% if github and linkedin %} — {% endif %}
+        {% if linkedin %}<a href="{{ linkedin }}">LinkedIn</a>{% endif %}
+      </div>
+    </div>
+    <div class="header-right">
+      {% if email %}<a href="mailto:{{ email }}">{{ email }}</a><br>{% endif %}
+      {% if phone %}Mobile: {{ phone }}{% endif %}
+    </div>
+  </div>
+
+
+  <!-- ── EDUCATION ─────────────────────────────────────────────── -->
+  {% if education_ug or education_pg %}
+  <div class="section-title">Education</div>
+  <hr class="rule">
+
+    {% for edu in [education_pg, education_ug] if edu %}
+    <div class="entry">
+      <div class="two-col">
+        <div class="left entry-name">{{ edu.university }}</div>
+        <div class="right">{{ edu.start }}{% if edu.start and edu.end %} – {% endif %}{{ edu.end }}</div>
+      </div>
+      <div class="one-col">
+        <ul class="highlights">
+          <li class="edu-degree">
+            {{ edu.degree }}{% if edu.field %} {{ edu.field }}{% endif %}
+            {% if edu.cgpa %}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="edu-cgpa">CGPA:</span> {{ edu.cgpa }}
+            {% endif %}
+          </li>
+          {% if edu.coursework %}
+          <li style="font-size:9pt; color:#333;">
+            Relevant Coursework: {{ edu.coursework }}
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+
+
+  <!-- ── SKILLS ────────────────────────────────────────────────── -->
+  {% if skills %}
+  <div class="section-title">Skills</div>
+  <hr class="rule">
+
+  <div style="margin-top:2pt;">
+    {% for skill in skills %}
+    {% if skill.category or skill.items %}
+    <div class="skill-row one-col">
+      {% if skill.category %}<span class="skill-category">{{ skill.category }}:</span> {% endif %}
+      <span class="skill-items">{{ skill.items }}</span>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+
+  <!-- ── EXPERIENCE ────────────────────────────────────────────── -->
+  {% if experience %}
+  <div class="section-title">Experience</div>
+  <hr class="rule">
+
+    {% for exp in experience %}
+    {% if exp.title or exp.company %}
+    <div class="entry">
+      <div class="two-col">
+        <div class="left">
+          <span class="entry-name">{{ exp.title }}</span>
+          {% if exp.company %}, <span class="entry-sub">{{ exp.company }}</span>{% endif %}
+        </div>
+        <div class="right">
+          {{ exp.start }}{% if exp.start and exp.end %} – {% endif %}{{ exp.end }}
+        </div>
+      </div>
+      {% if exp.bullets %}
+      <div class="one-col">
+        <ul class="highlights">
+          {% for bullet in exp.bullets %}
+          {% if bullet.strip() %}
+          <li>{{ bullet.strip().lstrip('•').strip() }}</li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  {% endif %}
+
+
+  <!-- ── PROJECTS ──────────────────────────────────────────────── -->
+  {% if projects %}
+  <div class="section-title">Projects</div>
+  <hr class="rule">
+
+    {% for proj in projects %}
+    {% if proj.name %}
+    <div class="entry">
+      <div class="one-col">
+        <span class="entry-name">
+          {% if proj.github %}
+            <a href="{{ proj.github }}">{{ proj.name }}</a>
+          {% else %}
+            {{ proj.name }}
+          {% endif %}
+        </span>
+        {% if proj.context %}, <span class="entry-sub">{{ proj.context }}</span>{% endif %}
+        {% if proj.start or proj.end %}
+        <span style="float:right; font-style:italic; font-size:9pt;">
+          {{ proj.start }}{% if proj.start and proj.end %} – {% endif %}{{ proj.end }}
+        </span>
+        {% endif %}
+      </div>
+      {% if proj.bullets %}
+      <ul class="highlights" style="margin-top:4pt;">
+        {% for bullet in proj.bullets %}
+        {% if bullet.strip() %}
+        <li>{{ bullet.strip().lstrip('•').strip() }}</li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  {% endif %}
+
+
+  <!-- ── ACHIEVEMENTS & POSITIONS OF RESPONSIBILITY ────────────── -->
+  {% if achievements %}
+  <div class="section-title">Achievements &amp; Positions of Responsibility</div>
+  <hr class="rule">
+
+  <div style="margin-top:4pt;">
+    {% for ach in achievements %}
+    {% if ach.text %}
+    <div class="one-col achievement">{{ ach.text }}</div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+
+  <!-- ── CERTIFICATIONS ────────────────────────────────────────── -->
+  {% if certifications %}
+  <div class="section-title">Certifications</div>
+  <hr class="rule">
+
+  <div style="margin-top:4pt;">
+    {% for cert in certifications %}
+    {% if cert.provider or cert.name %}
+    <div class="cert-row one-col">
+      {% if cert.provider %}<span class="cert-provider">{{ cert.provider }}</span> — {% endif %}
+      {{ cert.name }}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</body>
+</html>
