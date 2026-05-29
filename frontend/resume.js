@@ -17,13 +17,11 @@ function generatePDF(event) {
     const percent1 = document.getElementById("percent1").value;
 
     const sname2 = document.getElementById("sname2").value;
-    const slocate2 = document.getElementById("slocate2").value;
     const edate2 = document.getElementById("edate2").value;
     const stream2 = document.getElementById("stream2").value;
     const percent2 = document.getElementById("percent2").value;
 
     const uniname3 = document.getElementById("uniname3").value;
-    const unilocate3 = document.getElementById("unilocate3").value;
     const sdate3 = document.getElementById("sdate3").value;
     const edate3 = document.getElementById("edate3").value;
     const degree3 = document.getElementById("degree3").value;
@@ -31,7 +29,6 @@ function generatePDF(event) {
     const descp3 = document.getElementById("descp3").value;
 
     const uniname4 = document.getElementById("uniname4").value;
-    const unilocate4 = document.getElementById("unilocate4").value;
     const sdate4 = document.getElementById("sdate4").value;
     const edate4 = document.getElementById("edate4").value;
     const degree4 = document.getElementById("degree4").value;
@@ -122,46 +119,6 @@ function generatePDF(event) {
                       },
                   ]
                 : []),
-            ...(sname2 || slocate2 || edate2 || stream2 || percent2
-                ? [
-                      {
-                          text: `Class XII (${stream2.toUpperCase()})`,
-                          style: "subheader",
-                      },
-                      {
-                          text: `${toTitleCase(sname2)}, ${toTitleCase(slocate2)}`,
-                          style: "text",
-                      },
-                      {
-                          text: `${edate2}`,
-                          style: "text",
-                      },
-                      {
-                          text: `Percentage: ${percent2}%`,
-                          style: "text",
-                      },
-                  ]
-                : []),
-            ...(sname1 || slocate1 || edate1 || percent1
-                ? [
-                      {
-                          text: `Class X`,
-                          style: "subheader",
-                      },
-                      {
-                          text: `${toTitleCase(sname1)}, ${toTitleCase(slocate1)}`,
-                          style: "text",
-                      },
-                      {
-                          text: `${edate1}`,
-                          style: "text",
-                      },
-                      {
-                          text: `Percentage: ${percent1}%`,
-                          style: "text",
-                      },
-                  ]
-                : []),
 
             // Work Experience Section
             ...(ptitle || cname || sdate || edate || wsum
@@ -176,7 +133,7 @@ function generatePDF(event) {
                           style: "subheader",
                       },
                       {
-                          text: `${toTitleCase(cname)}`,
+                          text: `${(cname)}`,
                           style: "text",
                       },
                       {
@@ -264,6 +221,7 @@ function generatePDF(event) {
 
 // Helper functions
 function toTitleCase(str) {
+    if (!str) return ''
     return str
         ? str
               .split(" ")
